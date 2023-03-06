@@ -66,6 +66,7 @@ const Title = styled.h1`
   align-items: center;
   font-size: 55px;
   color: ${(props) => props.theme.textColor};
+  height: 25vh;
 `;
 
 function Root() {
