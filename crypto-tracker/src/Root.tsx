@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
 function Root() {
   return (
     <div>
       setup
-   </div>
+      <Outlet />
+    </div>
   );
 }
 
-export default Root
+export default Root;
