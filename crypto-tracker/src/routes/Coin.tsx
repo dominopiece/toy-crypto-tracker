@@ -64,14 +64,25 @@ const OverViewItemDes = styled(OverViewItem)`
 const Tabs = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: 25px 0px;
+  margin: 15px 0px;
   gap: 10px;
 `;
 const Tab = styled.span`
   text-align: center;
+  justify-content: center;
+  align-items: center;
   text-transform: uppercase;
   font-size: 15px;
   font-weight: 500;
+  padding: 7px 10px;
+  background-color: black;
+  border-radius: 10px;
+  a {
+    display: block;
+  }
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 interface IStateLocation {
@@ -226,18 +237,18 @@ function Coin() {
             </OverView>
           </>
         )}
+        <Tabs>
+          <Tab>
+            <Link to={`/${coinId}/chart`} state={coinId}>
+              Chart
+            </Link>
+          </Tab>
+          <Tab>
+            <Link to={`/${coinId}/price`}>Price</Link>
+          </Tab>
+        </Tabs>
+        <Outlet />
       </Container>
-      <Tabs>
-        <h1>test1</h1>
-        <h1>test2</h1>
-        <Tab>
-          <Link to={`/${coinId}/chart`}>Chart</Link>
-        </Tab>
-        <Tab>
-          <Link to={`/${coinId}/price`}>Price</Link>
-        </Tab>
-      </Tabs>
-      <Outlet />
     </>
   );
 }
