@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
@@ -67,7 +67,7 @@ const Tabs = styled.div`
   margin: 15px 0px;
   gap: 10px;
 `;
-const Tab = styled.span`
+const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -184,6 +184,10 @@ function Coin() {
 
   const isLoding = coinLoading && priceLoading;
 
+  // useMatch: 지정된 주소가 있으면 Object 없으면 null
+  const chartMatch = useMatch("/:coinId/chart");
+  const priceMatch = useMatch("/:coinId/price");
+
   return (
     <>
       <Container>
@@ -235,19 +239,20 @@ function Coin() {
                 <span>{priceData?.quotes.USD.price.toFixed(3)}</span>
               </OverViewItem>
             </OverView>
+
+            <Tabs>
+              <Tab isActive={chartMatch !== null}>
+                <Link to={`/${coinId}/chart`} state={coinId}>
+                  Chart
+                </Link>
+              </Tab>
+              <Tab isActive={priceMatch !== null}>
+                <Link to={`/${coinId}/price`}>Price</Link>
+              </Tab>
+            </Tabs>
+            <Outlet />
           </>
         )}
-        <Tabs>
-          <Tab>
-            <Link to={`/${coinId}/chart`} state={coinId}>
-              Chart
-            </Link>
-          </Tab>
-          <Tab>
-            <Link to={`/${coinId}/price`}>Price</Link>
-          </Tab>
-        </Tabs>
-        <Outlet />
       </Container>
     </>
   );
