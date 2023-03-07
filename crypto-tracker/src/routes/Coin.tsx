@@ -26,6 +26,13 @@ const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
 `;
 
+const Loader = styled.span`
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 20px;
+`;
+
 const OverView = styled.div`
   display: flex;
   justify-content: space-between;
@@ -65,7 +72,6 @@ const Tab = styled.span`
   text-transform: uppercase;
   font-size: 15px;
   font-weight: 500;
-  
 `;
 
 interface IStateLocation {
@@ -165,45 +171,61 @@ function Coin() {
   );
   // console.log(priceData);
 
+  const isLoding = coinLoading && priceLoading;
+
   return (
     <>
       <Container>
         <Header>
-          <Title>{state ? state : <h1>Loading..</h1>}</Title>
+          {/* 시크릿 모드 또는 다이렉트 주소 접속 시 coin name 출력 */}
+          <Title>
+            {state ? state : isLoding ? "Loding(title)" : coinData?.name}
+          </Title>
         </Header>
-        <OverView>
-          <OverViewItem>
-            <span>Rank</span>
-            <span>{coinData?.rank}</span>
-          </OverViewItem>
-          <OverViewItem>
-            <span>Symbol</span>
-            <span>{coinData?.symbol}</span>
-          </OverViewItem>
-          <OverViewItem>
-            <span>OpenSource</span>
-            <span>{coinData?.open_source ? "YES" : "NO"}</span>
-          </OverViewItem>
-        </OverView>
-        <OverViewDes>
-          <OverViewItemDes>
-            <h3>{coinData?.description}</h3>
-          </OverViewItemDes>
-        </OverViewDes>
-        <OverView>
-          <OverViewItem>
-            <span>Total Suply</span>
-            <span>{priceData?.total_supply}</span>
-          </OverViewItem>
-          <OverViewItem>
-            <span>Max Suply</span>
-            <span>{priceData?.max_supply}</span>
-          </OverViewItem>
-          <OverViewItem>
-            <span>Price USD($)</span>
-            <span>{priceData?.quotes.USD.price.toFixed(3)}</span>
-          </OverViewItem>
-        </OverView>
+        {isLoding ? (
+          <Loader>Loading..isLoading</Loader>
+        ) : (
+          <span>{coinData?.name}</span>
+        )}
+        {isLoding ? (
+          <Loader>Loading..isLoading</Loader>
+        ) : (
+          <>
+            <OverView>
+              <OverViewItem>
+                <span>Rank</span>
+                <span>{coinData?.rank}</span>
+              </OverViewItem>
+              <OverViewItem>
+                <span>Symbol</span>
+                <span>{coinData?.symbol}</span>
+              </OverViewItem>
+              <OverViewItem>
+                <span>OpenSource</span>
+                <span>{coinData?.open_source ? "YES" : "NO"}</span>
+              </OverViewItem>
+            </OverView>
+            <OverViewDes>
+              <OverViewItemDes>
+                <h3>{coinData?.description}</h3>
+              </OverViewItemDes>
+            </OverViewDes>
+            <OverView>
+              <OverViewItem>
+                <span>Total Suply</span>
+                <span>{priceData?.total_supply}</span>
+              </OverViewItem>
+              <OverViewItem>
+                <span>Max Suply</span>
+                <span>{priceData?.max_supply}</span>
+              </OverViewItem>
+              <OverViewItem>
+                <span>Price USD($)</span>
+                <span>{priceData?.quotes.USD.price.toFixed(3)}</span>
+              </OverViewItem>
+            </OverView>
+          </>
+        )}
       </Container>
       <Tabs>
         <h1>test1</h1>
