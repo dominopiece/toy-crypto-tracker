@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
-import { useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
 
@@ -52,6 +53,19 @@ const OverViewDes = styled(OverView)`
 const OverViewItemDes = styled(OverViewItem)`
   justify-content: center;
   align-items: center;
+`;
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+const Tab = styled.span`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 500;
+  
 `;
 
 interface IStateLocation {
@@ -191,6 +205,17 @@ function Coin() {
           </OverViewItem>
         </OverView>
       </Container>
+      <Tabs>
+        <h1>test1</h1>
+        <h1>test2</h1>
+        <Tab>
+          <Link to={`/${coinId}/chart`}>Chart</Link>
+        </Tab>
+        <Tab>
+          <Link to={`/${coinId}/price`}>Price</Link>
+        </Tab>
+      </Tabs>
+      <Outlet />
     </>
   );
 }
