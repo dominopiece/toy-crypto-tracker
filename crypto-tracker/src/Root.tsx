@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 
@@ -60,6 +61,21 @@ a {
 }
 `;
 
+const Nav = styled.div`
+  display: flex;
+  justify-content: left;
+`;
+
+const BtnToHome = styled.button`
+  color: white;
+  border: none;
+  background-color: ${(props) => props.theme.bgColor};
+  font-size: 18px;
+  :hover {
+    color: ${(props) => props.theme.accentColor};
+  }
+`;
+
 const Title = styled.h1`
   display: flex;
   justify-content: center;
@@ -73,6 +89,14 @@ function Root() {
   return (
     <>
       <GlobalStyle />
+      <Nav>
+        <BtnToHome>
+          <Link to={"/"}>😼 home</Link>
+        </BtnToHome>
+        <BtnToHome>
+          <Link to={"/coins"}> 📆 Coin-list</Link>
+        </BtnToHome>
+      </Nav>
       <Title>Cryto tracker</Title>
       <Outlet />
     </>

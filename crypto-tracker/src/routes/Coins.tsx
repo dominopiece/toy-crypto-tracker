@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "./api";
 
@@ -63,15 +63,26 @@ const Img = styled.img`
 `;
 
 const Paging = styled.div`
-padding: 50px 50px;
+  padding: 50px 50px;
 `;
 
 const PageList = styled.ul`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 
-const Page = styled.li``;
+const Page = styled.li<{ isActive: boolean }>`
+  background-color: black;
+  margin: 0 20px;
+  font-size: 20px;
+  a {
+    display: block;
+    padding: 15px 20px;
+  }
+  &:hover{
+    color: ${props => props.theme.accentColor};
+  }
+`;
 interface ICoinListShape {
   id: "btc-bitcoin";
   name: "Bitcoin";
@@ -83,21 +94,15 @@ interface ICoinListShape {
 }
 
 function Coins() {
-  //   useEffect(() => {
-  //     (async () => {
-  //       const response = await (
-  //         await fetch(`https://api.coinpaprika.com/v1/coins`)
-  //       ).json();
-  //     //   console.log(response);
-  //     })();
-  //   }, []);
-
   const { isLoading, data } = useQuery<ICoinListShape[]>(
     "coinList",
     fetchCoins
   );
   //   console.log(data);
-
+  const homeMatch = useMatch("/");
+  const page1Match = useMatch("/pages/1");
+  const page2Match = useMatch("/pages/2");
+  const homeList = [true, false, false];
   return (
     <Container>
       <Header>
@@ -107,28 +112,39 @@ function Coins() {
         <Title>Loading..</Title>
       ) : (
         <>
-          <CoinList>
-            {data?.slice(0, 33).map((coin) => (
-              <Coin key={coin.rank}>
-                <Link to={`/${coin.id}`} state={coin.name}>
-                  <Img
-                    src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLocaleLowerCase()}`}
-                  />
-                  {coin.name}
-                </Link>
-              </Coin>
-            ))}
-          </CoinList>
-          <Paging>
-            <PageList>
-              {["1", "2", "3"].map((page) => (
-                <Page key={page}>
-                  <Link to={`/pages/${page}`}>{page}</Link>
-                </Page>
+          <>
+            <CoinList>
+              {data?.slice(0, 33).map((coin) => (
+                <Coin key={coin.rank}>
+                  <Link to={`/${coin.id}`} state={coin.name}>
+                    <Img
+                      src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLocaleLowerCase()}`}
+                    />
+                    {coin.name}
+                  </Link>
+                </Coin>
               ))}
-            </PageList>
-          </Paging>
+            </CoinList>
+            <Paging>
+              <PageList>
+                {["1", "2", "3"].map((page) => (
+                  <Page key={page} isActive={homeList[+page - 1]}>
+                    <Link to={`/pages/${page}`}>{page}</Link>
+                  </Page>
+                ))}
+              </PageList>
+            </Paging>
+          </>
+          <>
+          {/* TODO: 페이지 */}
+          <Routes>
+            <Route>
+
+            </Route>
+          </Routes>
+          </>
         </>
+
       )}
     </Container>
   );
