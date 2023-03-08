@@ -4,13 +4,13 @@ import { fetchCoinHistory } from "./api";
 import ApexCharts from "react-apexcharts";
 import styled from "styled-components";
 
-const ChartDiv = styled.div`
+export const ChartDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-const Title = styled.h1`
+export const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -130,7 +130,7 @@ function Chart() {
                         };
                       }),
                     },
-                  ] as any
+                  ] as unknown as number[]
                 }
                 options={{
                   theme: {

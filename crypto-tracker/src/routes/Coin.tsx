@@ -4,13 +4,13 @@ import { Outlet, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
 
-const Container = styled.div`
+export const Container = styled.div`
   max-width: 480px;
   margin: 0 auto;
   padding: 0px 20px;
 `;
 
-const Header = styled.header`
+export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -225,7 +225,10 @@ function Coin() {
             <Title>
               {state ? state : isLoding ? "Loding(title)" : coinData?.name}
             </Title>
-            <PriceSpan>USD {priceData?.quotes.USD.price.toFixed(3)}</PriceSpan>
+            <PriceSpan>
+              USD
+              {priceData?.quotes.USD.price.toFixed(3)}
+            </PriceSpan>
             <Price24Span>
               {priceData?.quotes.USD.percent_change_24h}% <span>24hours</span>
             </Price24Span>
@@ -281,7 +284,9 @@ function Coin() {
                 </Link>
               </Tab>
               <Tab isActive={priceMatch !== null}>
-                <Link to={`/${coinId}/price`}>Price</Link>
+                <Link to={`/${coinId}/price`} state={coinId}>
+                  Price
+                </Link>
               </Tab>
             </Tabs>
             <Outlet />
