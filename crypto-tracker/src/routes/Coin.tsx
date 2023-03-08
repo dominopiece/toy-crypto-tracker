@@ -12,10 +12,14 @@ const Container = styled.div`
 
 const Header = styled.header`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20vh;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+`;
+
+const TitleDiv = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h1`
@@ -24,6 +28,30 @@ const Title = styled.h1`
   align-items: center;
   font-size: 48px;
   color: ${(props) => props.theme.accentColor};
+`;
+
+const PriceSpan = styled.span`
+  font-size: 22px;
+  font-weight: 600;
+`;
+
+const Price24Span = styled.span`
+  color: ${(props) => props.theme.accentColor};
+`;
+
+const Rank = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  padding: 16px 20px;
+  span {
+    font-size: 15px;
+  }
+  p {
+    margin-top: 10px;
+    font-size: 19px;
+  }
 `;
 
 const Loader = styled.span`
@@ -192,10 +220,20 @@ function Coin() {
     <>
       <Container>
         <Header>
-          {/* 시크릿 모드 또는 다이렉트 주소 접속 시 coin name 출력 */}
-          <Title>
-            {state ? state : isLoding ? "Loding(title)" : coinData?.name}
-          </Title>
+          <TitleDiv>
+            {/* 시크릿 모드 또는 다이렉트 주소 접속 시 coin name 출력 */}
+            <Title>
+              {state ? state : isLoding ? "Loding(title)" : coinData?.name}
+            </Title>
+            <PriceSpan>USD {priceData?.quotes.USD.price.toFixed(3)}</PriceSpan>
+            <Price24Span>
+              {priceData?.quotes.USD.percent_change_24h}% <span>24hours</span>
+            </Price24Span>
+          </TitleDiv>
+          <Rank>
+            <span>Rank</span>
+            <p>#{coinData?.rank}</p>
+          </Rank>
         </Header>
         {isLoding ? (
           <Loader>Loading..isLoading</Loader>
@@ -207,10 +245,6 @@ function Coin() {
         ) : (
           <>
             <OverView>
-              <OverViewItem>
-                <span>Rank</span>
-                <span>{coinData?.rank}</span>
-              </OverViewItem>
               <OverViewItem>
                 <span>Symbol</span>
                 <span>{coinData?.symbol}</span>
