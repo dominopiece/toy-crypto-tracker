@@ -1,8 +1,9 @@
 import { useQuery } from "react-query";
-import { Link, useMatch } from "react-router-dom";
+import { Link, Route, Routes, useMatch } from "react-router-dom";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
+import Price from "./Price";
 
 export const Container = styled.div`
   max-width: 480px;
@@ -289,6 +290,21 @@ function Coin() {
                 </Link>
               </Tab>
             </Tabs>
+            <Routes>
+              <Route
+                path="/coinId/price"
+                element={
+                  <Price
+                    percent30m={priceData?.quotes.USD.percent_change_30m}
+                    percent1h={priceData?.quotes.USD.percent_change_1h}
+                    percent12h={priceData?.quotes.USD.percent_change_12h}
+                    percent7d={priceData?.quotes.USD.percent_change_7d}
+                    percent30d={priceData?.quotes.USD.percent_change_30d}
+                    percent1y={priceData?.quotes.USD.percent_change_1y}
+                  ></Price>
+                }
+              />
+            </Routes>
             <Outlet />
           </>
         )}

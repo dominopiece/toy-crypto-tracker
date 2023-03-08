@@ -24,7 +24,17 @@ const router = createBrowserRouter([
           },
           {
             path: "price",
-            element: <Price />,
+            // FIXME 아래 코드 이해불가
+            element: (
+              <Price
+                percent12h={1}
+                percent1h={1}
+                percent1y={1}
+                percent30d={1}
+                percent30m={1}
+                percent7d={1}
+              />
+            ),
           },
         ],
       },

@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Link, Route, Routes, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "./api";
 
-const Container = styled.div`
+export const Container = styled.div`
   max-width: 680px;
   margin: 0 auto;
   padding: 5px 20px;
@@ -83,13 +84,13 @@ const Page = styled.li<{ isActive: boolean }>`
   }
 `;
 interface ICoinListShape {
-  id: "btc-bitcoin";
-  name: "Bitcoin";
-  symbol: "BTC";
-  rank: 1;
-  is_new: false;
-  is_active: true;
-  type: "coin";
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
 }
 
 function Coins() {
