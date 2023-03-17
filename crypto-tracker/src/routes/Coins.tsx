@@ -39,7 +39,8 @@ const Coin = styled.div`
   width: 200px;
   border-radius: 15px;
   margin-bottom: 5px;
-  background-color: black;
+  /* background-color: black; */
+  background-color: ${props => props.theme.cardBgColor};
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
   color: ${(props) => props.theme.textColor};
   a {
@@ -78,8 +79,8 @@ const Page = styled.li<{ isActive: boolean }>`
     display: block;
     padding: 15px 20px;
   }
-  &:hover{
-    color: ${props => props.theme.accentColor};
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
   }
 `;
 interface ICoinListShape {
@@ -98,9 +99,9 @@ function Coins() {
     fetchCoins
   );
   //   console.log(data);
-  const homeMatch = useMatch("/");
-  const page1Match = useMatch("/pages/1");
-  const page2Match = useMatch("/pages/2");
+  // const homeMatch = useMatch("/");
+  // const page1Match = useMatch("/pages/1");
+  // const page2Match = useMatch("/pages/2");
   const homeList = [true, false, false];
   return (
     <Container>
@@ -135,15 +136,12 @@ function Coins() {
             </Paging>
           </>
           <>
-          {/* TODO: 페이지 */}
-          <Routes>
-            <Route>
-
-            </Route>
-          </Routes>
+            {/* TODO: 페이지 */}
+            <Routes>
+              <Route></Route>
+            </Routes>
           </>
         </>
-
       )}
     </Container>
   );

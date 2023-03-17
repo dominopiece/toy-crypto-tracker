@@ -27,7 +27,8 @@ const Title = styled.h1`
   justify-content: center;
   align-items: center;
   font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
+  /* color: ${(props) => props.theme.accentColor}; */
+  color: ${(props) => props.theme.textColor};
 `;
 
 const PriceSpan = styled.span`
@@ -43,7 +44,8 @@ const Rank = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: black;
+  background-color: ${(props) => props.theme.cardBgColor};
+  border: solid 1px;
   padding: 16px 20px;
   span {
     font-size: 15px;
@@ -64,7 +66,8 @@ const Loader = styled.span`
 const OverView = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: black;
+  background-color: ${(props) => props.theme.cardBgColor};
+  /* background-color: rgba(0, 0, 0, 0.5); */
   border-radius: 5px;
   padding: 10px 20px;
 `;
@@ -82,7 +85,8 @@ const OverViewItem = styled.div`
 `;
 
 const OverViewDes = styled(OverView)`
-  background-color: gray;
+  background-color: ${props => props.theme.grayDiv};
+  /* background-color: red; */
 `;
 
 const OverViewItemDes = styled(OverViewItem)`
@@ -103,7 +107,8 @@ const Tab = styled.span<{ isActive: boolean }>`
   font-size: 15px;
   font-weight: 500;
   padding: 7px 10px;
-  background-color: black;
+  background-color: ${props => props.theme.grayDiv};
+  /* background-color: black; */
   border-radius: 10px;
   a {
     display: block;

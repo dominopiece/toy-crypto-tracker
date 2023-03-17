@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { isDarkAtom } from "./atoms";
+import { darkTheme, lightTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -67,7 +70,8 @@ const Nav = styled.div`
 `;
 
 const BtnToHome = styled.button`
-  color: white;
+  /* color: white; */
+  color: ${(props) => props.theme.textColor};
   border: none;
   background-color: ${(props) => props.theme.bgColor};
   font-size: 18px;
@@ -85,20 +89,44 @@ const Title = styled.h1`
   height: 25vh;
 `;
 
+const Button = styled.button`
+  display: block;
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 15px;
+  /* background-color: ${(props) => props.theme.textColor}; */
+  /* background-color: ${(props) => props.theme.cardBgColor}h; */
+  background-color: transparent;
+  color: ${(props) => props.theme.textColor};
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
+  }
+`;
+
 function Root() {
+  const isDark = useRecoilValue(isDarkAtom);
+  const setIsDark = useSetRecoilState(isDarkAtom);
+  const toggleDark = () => setIsDark((prev) => !prev);
+
   return (
     <>
-      <GlobalStyle />
-      <Nav>
-        <BtnToHome>
-          <Link to={"/"}>😼 home</Link>
-        </BtnToHome>
-        <BtnToHome>
-          <Link to={"/coins"}> 📆 Coin-list</Link>
-        </BtnToHome>
-      </Nav>
-      <Title>Cryto tracker</Title>
-      <Outlet />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Nav>
+          <BtnToHome>
+            <Link to={"/"}>😼 home</Link>
+          </BtnToHome>
+          <BtnToHome>
+            <Link to={"/coins"}> 📆 Coin-list</Link>
+          </BtnToHome>
+          <Button onClick={toggleDark}>Toggle Mode</Button>
+        </Nav>
+        <>
+          <Title>Cryto tracker</Title>
+        </>
+        <Outlet />
+      </ThemeProvider>
     </>
   );
 }

@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { fetchCoinHistory } from "./api";
 import ApexCharts from "react-apexcharts";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 export const ChartDiv = styled.div`
   display: flex;
@@ -32,6 +34,7 @@ interface IHistorical {
   market_cap: number;
 }
 function Chart() {
+  const isDark = useRecoilValue(isDarkAtom);
   const { state } = useLocation() as ICoinLocation;
   // console.log(state);
   const coinId = state;
@@ -61,7 +64,8 @@ function Chart() {
                 ]}
                 options={{
                   theme: {
-                    mode: "dark",
+                    // mode: "dark",
+                    mode: isDark ? "dark" : "light",
                   },
                   chart: {
                     width: 300,
@@ -134,7 +138,8 @@ function Chart() {
                 }
                 options={{
                   theme: {
-                    mode: "dark",
+                    // mode: "dark",
+                    mode: isDark ? "dark" : "light",
                   },
                   chart: {
                     width: 300,
